@@ -1,0 +1,10 @@
+*.json
+*.xlsx
+__pycache__
+build
+dist
+sptyplgen
+venv
+.vscode
+token.txt
+.env
