@@ -38,16 +38,15 @@ class spotify:
         )
         return playlist
 
-    def find_song(self, song_name, year=None):
-        if year is not None:
+    def find_song(self, song_name, artist=None):
+        if artist is not None:
             song_search = self.client.search(
-                q=f"track: {song_name} year: {year}", limit=1, type="track"
+                q=f"track: {song_name} artist: {artist}", limit=1, type="track"
             )
         else:
             song_search = self.client.search(
                 q="track: {song_name}", limit=1, type="track"
             )
-
         try:
             song_info = song_search["tracks"]["items"][0]["uri"]
             if song_info:
@@ -56,3 +55,10 @@ class spotify:
                 False
         except:
             return False
+
+    def add_to_playlist(self, playlist, songs):
+        add_status = self.client.user_playlist_add_tracks(
+            self.user["id"], playlist_id=playlist["id"], tracks=songs
+        )
+        if add_status["snapshot_id"]:
+            print("Successfully added Tracks")
